@@ -1,9 +1,7 @@
-/* =========================================================
-   DASH SAFARIS — WEBSITE JAVASCRIPT
-   ========================================================= */
+/* DASH SAFARIS WEBSITE JAVASCRIPT */
 
 
-/* ================= HEADER ================= */
+/* HEADER */
 
 const header = document.getElementById("header");
 
@@ -18,7 +16,7 @@ window.addEventListener("scroll", () => {
 });
 
 
-/* ================= MOBILE MENU ================= */
+/* MOBILE MENU */
 
 const menuButton = document.getElementById("menuButton");
 const mobileMenu = document.getElementById("mobileMenu");
@@ -36,13 +34,14 @@ menuButton.addEventListener("click", () => {
 });
 
 
-/* Close mobile menu after clicking a link */
+/* CLOSE MOBILE MENU */
 
 document.querySelectorAll(".mobile-menu a").forEach(link => {
 
   link.addEventListener("click", () => {
 
     mobileMenu.classList.remove("active");
+
     menuButton.textContent = "☰";
 
   });
@@ -50,17 +49,19 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 });
 
 
-/* ================= SMOOTH SCROLL ================= */
+/* SMOOTH SCROLL */
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
 
-  link.addEventListener("click", function(e) {
+  link.addEventListener("click", function(event) {
 
-    const target = document.querySelector(this.getAttribute("href"));
+    const target = document.querySelector(
+      this.getAttribute("href")
+    );
 
     if (!target) return;
 
-    e.preventDefault();
+    event.preventDefault();
 
     target.scrollIntoView({
       behavior: "smooth",
@@ -72,33 +73,35 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 
-/* ================= SCROLL REVEAL ================= */
+/* SCROLL ANIMATION */
 
-const revealElements = document.querySelectorAll(".reveal");
+const revealElements =
+  document.querySelectorAll(".reveal");
 
-const revealObserver = new IntersectionObserver(
+const revealObserver =
+  new IntersectionObserver(
 
-  (entries, observer) => {
+    (entries, observer) => {
 
-    entries.forEach(entry => {
+      entries.forEach(entry => {
 
-      if (entry.isIntersecting) {
+        if (entry.isIntersecting) {
 
-        entry.target.classList.add("visible");
+          entry.target.classList.add("visible");
 
-        observer.unobserve(entry.target);
+          observer.unobserve(entry.target);
 
-      }
+        }
 
-    });
+      });
 
-  },
+    },
 
-  {
-    threshold: 0.12
-  }
+    {
+      threshold: 0.12
+    }
 
-);
+  );
 
 
 revealElements.forEach(element => {
@@ -108,47 +111,37 @@ revealElements.forEach(element => {
 });
 
 
-/* ================= CURRENT YEAR ================= */
+/* YEAR */
 
 const year = document.getElementById("year");
 
 if (year) {
 
-  year.textContent = new Date().getFullYear();
+  year.textContent =
+    new Date().getFullYear();
 
 }
 
 
-/* ================= WHATSAPP ================= */
+/* WHATSAPP */
 
-document.querySelectorAll('a[href*="wa.me"]').forEach(button => {
+document
+  .querySelectorAll('a[href*="wa.me"]')
+  .forEach(button => {
 
-  button.addEventListener("click", () => {
+    button.addEventListener("click", () => {
 
-    console.log("WhatsApp booking button clicked.");
+      console.log(
+        "WhatsApp booking button clicked."
+      );
 
-  });
-
-});
-
-
-/* ================= IMAGE FALLBACK ================= */
-
-document.querySelectorAll("img").forEach(image => {
-
-  image.addEventListener("error", () => {
-
-    image.style.background = "#173d2a";
-    image.style.minHeight = "200px";
-    image.alt = "Safari image";
+    });
 
   });
 
-});
 
-
-/* ================= PAGE READY ================= */
+/* PAGE LOADED */
 
 console.log(
-  "Dash Safaris website concept loaded successfully."
+  "Dash Safaris concept website loaded."
 );
