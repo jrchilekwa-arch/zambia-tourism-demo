@@ -1,140 +1,70 @@
 /* =========================================================
-   ZAMBEZI WILD SAFARIS
-   WEBSITE JAVASCRIPT
-========================================================= */
+   DASH SAFARIS — WEBSITE JAVASCRIPT
+   ========================================================= */
 
 
-/* =========================================================
-   MOBILE MENU
-========================================================= */
+/* ================= HEADER ================= */
+
+const header = document.getElementById("header");
+
+window.addEventListener("scroll", () => {
+
+  if (window.scrollY > 50) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+
+});
+
+
+/* ================= MOBILE MENU ================= */
 
 const menuButton = document.getElementById("menuButton");
 const mobileMenu = document.getElementById("mobileMenu");
 
-if (menuButton && mobileMenu) {
+menuButton.addEventListener("click", () => {
 
-  menuButton.addEventListener("click", () => {
+  mobileMenu.classList.toggle("active");
 
-    const isOpen = mobileMenu.classList.toggle("open");
-
-    menuButton.setAttribute(
-      "aria-expanded",
-      isOpen ? "true" : "false"
-    );
-
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-  });
-
-
-  const mobileLinks =
-    mobileMenu.querySelectorAll("a");
-
-  mobileLinks.forEach(link => {
-
-    link.addEventListener("click", () => {
-
-      mobileMenu.classList.remove("open");
-
-      menuButton.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
-      document.body.style.overflow = "";
-
-    });
-
-  });
-
-}
-
-
-/* =========================================================
-   HEADER SCROLL EFFECT
-========================================================= */
-
-const siteHeader =
-  document.getElementById("siteHeader");
-
-function updateHeader() {
-
-  if (window.scrollY > 50) {
-
-    siteHeader.classList.add("scrolled");
-
+  if (mobileMenu.classList.contains("active")) {
+    menuButton.textContent = "×";
   } else {
-
-    siteHeader.classList.remove("scrolled");
-
+    menuButton.textContent = "☰";
   }
 
-}
-
-window.addEventListener(
-  "scroll",
-  updateHeader,
-  { passive: true }
-);
-
-updateHeader();
+});
 
 
-/* =========================================================
-   CURRENT YEAR
-========================================================= */
+/* Close mobile menu after clicking a link */
 
-const yearElement =
-  document.getElementById("year");
+document.querySelectorAll(".mobile-menu a").forEach(link => {
 
-if (yearElement) {
+  link.addEventListener("click", () => {
 
-  yearElement.textContent =
-    new Date().getFullYear();
+    mobileMenu.classList.remove("active");
+    menuButton.textContent = "☰";
 
-}
+  });
+
+});
 
 
-/* =========================================================
-   SMOOTH ANCHOR SCROLLING
-========================================================= */
+/* ================= SMOOTH SCROLL ================= */
 
-document.querySelectorAll(
-  'a[href^="#"]'
-).forEach(anchor => {
+document.querySelectorAll('a[href^="#"]').forEach(link => {
 
-  anchor.addEventListener("click", function(event) {
+  link.addEventListener("click", function(e) {
 
-    const targetId =
-      this.getAttribute("href");
+    const target = document.querySelector(this.getAttribute("href"));
 
-    if (!targetId || targetId === "#") {
-      return;
-    }
+    if (!target) return;
 
-    const target =
-      document.querySelector(targetId);
+    e.preventDefault();
 
-    if (!target) {
-      return;
-    }
-
-    event.preventDefault();
-
-    const headerOffset = 70;
-
-    const targetPosition =
-      target.getBoundingClientRect().top +
-      window.scrollY -
-      headerOffset;
-
-    window.scrollTo({
-      top: targetPosition,
-      behavior: "smooth"
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
     });
 
   });
@@ -142,105 +72,83 @@ document.querySelectorAll(
 });
 
 
-/* =========================================================
-   REVEAL ANIMATION
-========================================================= */
+/* ================= SCROLL REVEAL ================= */
 
-const revealElements =
-  document.querySelectorAll(
-    ".experience-card, .package-card, .review, .feature, .gallery-item"
-  );
+const revealElements = document.querySelectorAll(".reveal");
 
-if ("IntersectionObserver" in window) {
+const revealObserver = new IntersectionObserver(
 
-  const revealObserver =
-    new IntersectionObserver(
-      (entries, observer) => {
+  (entries, observer) => {
 
-        entries.forEach(entry => {
+    entries.forEach(entry => {
 
-          if (!entry.isIntersecting) {
-            return;
-          }
+      if (entry.isIntersecting) {
 
-          entry.target.classList.add("visible");
+        entry.target.classList.add("visible");
 
-          observer.unobserve(entry.target);
+        observer.unobserve(entry.target);
 
-        });
-
-      },
-      {
-        threshold: 0.12
       }
-    );
 
-  revealElements.forEach(element => {
+    });
 
-    element.classList.add("reveal");
+  },
 
-    revealObserver.observe(element);
+  {
+    threshold: 0.12
+  }
 
-  });
+);
+
+
+revealElements.forEach(element => {
+
+  revealObserver.observe(element);
+
+});
+
+
+/* ================= CURRENT YEAR ================= */
+
+const year = document.getElementById("year");
+
+if (year) {
+
+  year.textContent = new Date().getFullYear();
 
 }
 
 
-/* =========================================================
-   WHATSAPP BOOKING
-========================================================= */
+/* ================= WHATSAPP ================= */
 
-const whatsappButtons =
-  document.querySelectorAll(
-    ".whatsapp-button, .whatsapp-float"
-  );
-
-whatsappButtons.forEach(button => {
+document.querySelectorAll('a[href*="wa.me"]').forEach(button => {
 
   button.addEventListener("click", () => {
 
-    console.log(
-      "Opening WhatsApp enquiry..."
-    );
+    console.log("WhatsApp booking button clicked.");
 
   });
 
 });
 
 
-/* =========================================================
-   SIMPLE IMAGE FALLBACK
-========================================================= */
+/* ================= IMAGE FALLBACK ================= */
 
-document.querySelectorAll(
-  ".card-image, .package-image, .gallery-item, .about-image"
-).forEach(element => {
+document.querySelectorAll("img").forEach(image => {
 
-  element.addEventListener(
-    "error",
-    () => {
+  image.addEventListener("error", () => {
 
-      element.style.backgroundImage =
-        "none";
+    image.style.background = "#173d2a";
+    image.style.minHeight = "200px";
+    image.alt = "Safari image";
 
-      element.style.backgroundColor =
-        "#183529";
-
-    }
-  );
+  });
 
 });
 
 
-/* =========================================================
-   CONSOLE BRANDING
-========================================================= */
+/* ================= PAGE READY ================= */
 
 console.log(
-  "%c ZAMBEZI WILD SAFARIS ",
-  "background:#0b2118;color:#dfc98f;padding:8px;font-weight:bold;"
-);
-
-console.log(
-  "Premium tourism website demo loaded successfully."
+  "Dash Safaris website concept loaded successfully."
 );
