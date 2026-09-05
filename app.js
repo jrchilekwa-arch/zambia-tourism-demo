@@ -1,7 +1,11 @@
-/* DASH SAFARIS WEBSITE JAVASCRIPT */
+/* =====================================================
+   DASH SAFARIS WEBSITE JAVASCRIPT
+   ===================================================== */
 
 
-/* HEADER */
+/* -----------------------------
+   HEADER
+----------------------------- */
 
 const header = document.getElementById("header");
 
@@ -16,7 +20,9 @@ window.addEventListener("scroll", () => {
 });
 
 
-/* MOBILE MENU */
+/* -----------------------------
+   MOBILE MENU
+----------------------------- */
 
 const menuButton = document.getElementById("menuButton");
 const mobileMenu = document.getElementById("mobileMenu");
@@ -34,14 +40,15 @@ menuButton.addEventListener("click", () => {
 });
 
 
-/* CLOSE MOBILE MENU */
+/* -----------------------------
+   CLOSE MOBILE MENU
+----------------------------- */
 
 document.querySelectorAll(".mobile-menu a").forEach(link => {
 
   link.addEventListener("click", () => {
 
     mobileMenu.classList.remove("active");
-
     menuButton.textContent = "☰";
 
   });
@@ -49,7 +56,9 @@ document.querySelectorAll(".mobile-menu a").forEach(link => {
 });
 
 
-/* SMOOTH SCROLL */
+/* -----------------------------
+   SMOOTH SCROLL
+----------------------------- */
 
 document.querySelectorAll('a[href^="#"]').forEach(link => {
 
@@ -73,7 +82,9 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 });
 
 
-/* SCROLL ANIMATION */
+/* -----------------------------
+   SCROLL ANIMATION
+----------------------------- */
 
 const revealElements =
   document.querySelectorAll(".reveal");
@@ -111,7 +122,9 @@ revealElements.forEach(element => {
 });
 
 
-/* YEAR */
+/* -----------------------------
+   YEAR
+----------------------------- */
 
 const year = document.getElementById("year");
 
@@ -123,7 +136,48 @@ if (year) {
 }
 
 
-/* WHATSAPP */
+/* -----------------------------
+   PACKAGE WHATSAPP BUTTONS
+----------------------------- */
+
+document.querySelectorAll(".package-link").forEach(button => {
+
+  button.addEventListener("click", function(event) {
+
+    event.preventDefault();
+
+    const packageCard =
+      this.closest(".package-card");
+
+    if (!packageCard) return;
+
+    const packageTitle =
+      packageCard.querySelector("h3");
+
+    if (!packageTitle) return;
+
+    const packageName =
+      packageTitle.textContent.trim();
+
+    const message =
+      `Hello Dash Safaris, I'm interested in the ${packageName}. Please send me more details.`;
+
+    const whatsappURL =
+      `https://wa.me/260765440281?text=${encodeURIComponent(message)}`;
+
+    window.open(
+      whatsappURL,
+      "_blank"
+    );
+
+  });
+
+});
+
+
+/* -----------------------------
+   WHATSAPP BUTTONS
+----------------------------- */
 
 document
   .querySelectorAll('a[href*="wa.me"]')
@@ -140,7 +194,9 @@ document
   });
 
 
-/* PAGE LOADED */
+/* -----------------------------
+   PAGE LOADED
+----------------------------- */
 
 console.log(
   "Dash Safaris concept website loaded."
